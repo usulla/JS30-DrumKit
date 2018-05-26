@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Drum Kit</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	 <div class="keys">
+    <div data-key="65" class="key">
+      <kbd>A</kbd>
+      <span class="sound">clap</span>
+    </div>
+    <div data-key="83" class="key">
+      <kbd>S</kbd>
+      <span class="sound">hihat</span>
+    </div>
+    <div data-key="68" class="key">
+      <kbd>D</kbd>
+      <span class="sound">kick</span>
+    </div>
+    <div data-key="70" class="key">
+      <kbd>F</kbd>
+      <span class="sound">openhat</span>
+    </div>
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">boom</span>
+    </div>
+    <div data-key="72" class="key">
+      <kbd>H</kbd>
+      <span class="sound">ride</span>
+    </div>
+    <div data-key="74" class="key">
+      <kbd>J</kbd>
+      <span class="sound">snare</span>
+    </div>
+    <div data-key="75" class="key">
+      <kbd>K</kbd>
+      <span class="sound">tom</span>
+    </div>
+    <div data-key="76" class="key">
+      <kbd>L</kbd>
+      <span class="sound">tink</span>
+    </div>
+  </div>
+
+  <audio data-key="65" src="https://sampleswap.org/samples-ghost/DRUMS%20and%20SINGLE%20HITS/claps/147[kb]clap10.wav.mp3"></audio>
+  <audio data-key="83" src="https://sampleswap.org/samples-ghost/DRUMS%20and%20SINGLE%20HITS/claps/8[kb]clap.wav.mp3"></audio>
+  <audio data-key="68" src="https://sampleswap.org/samples-ghost/DRUMS%20and%20SINGLE%20HITS/claps/19[kb]CP_set5.wav.mp3"></audio>
+  <audio data-key="70" src="https://sampleswap.org/samples-ghost/DRUMS%20and%20SINGLE%20HITS/claps/62[kb]static_clap.aif.mp3"></audio>
+  <audio data-key="71" src="https://sampleswap.org/samples-ghost/DRUMS%20and%20SINGLE%20HITS/claps/147[kb]squeezle-clap.wav.mp3"></audio>
+  <audio data-key="72" src="https://sampleswap.org/samples-ghost/DRUMS%20and%20SINGLE%20HITS/claps/13[kb]weird-clap.aif.mp3"></audio>
+  <audio data-key="74" src="https://sampleswap.org/samples-ghost/DRUMS%20and%20SINGLE%20HITS/claps/24[kb]queer-clap.aif.mp3"></audio>
+  <audio data-key="75" src="https://sampleswap.org/samples-ghost/DRUMS%20and%20SINGLE%20HITS/claps/12[kb]pop-clap.wav.mp3"></audio>
+  <audio data-key="76" src="https://sampleswap.org/samples-ghost/DRUMS%20and%20SINGLE%20HITS/claps/98[kb]mega-clap.wav.mp3"></audio>
+	<script>
+			function playSound(e){
+			const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+			const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+			if (!audio) return;
+			audio.currentTime = 0;
+			audio.play();
+			key.classList.add('playing');
+			}
+
+			function removeTransition(e){
+				if (e.propertyName !== 'transform') return; // skip it if it's not a transform
+
+				console.log(this);
+				this.classList.remove('playing')
+			}
+
+			const keys = document.querySelectorAll('.key');
+			keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+		    window.addEventListener('keydown', playSound);
+	</script>
+</body>
+</html>
+
+
